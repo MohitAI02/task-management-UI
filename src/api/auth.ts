@@ -1,5 +1,6 @@
 
-import type { LoginRequest, LoginResponse } from "../type";
+
+import type { LoginRequest, LoginResponse } from "../type/auth";
 import { apiPost } from "./client";
 
 

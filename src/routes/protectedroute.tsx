@@ -1,17 +1,43 @@
-import {Routes,Route,Navigate,} from "react-router-dom";
-import { useAuth } from "../../context/authcontext";
-import LoginPage from "../../pages/loginpage/loginpage";
-import ProtectedRoute from "./protectedroute";
-import AdminLayout from "../../pages/admin/admindashboard";
-import AdminHome from "../../pages/admin/adminhome";
-import AdminEmployees from "../../pages/admin/adminemployees";
-import AdminTasks from "../../pages/admin/admintasks";
-import AdminReports from "../../pages/admin/adminreports";
-import EmployeeLayout from "../../pages/employee/employeedashboard";
-import EmployeeTasks from "../../pages/employee/employeetasks";
-import EmployeeReport from "../../pages/employee/employeereport";
 
-;
+import { Navigate, Outlet, Routes, Route } from "react-router-dom";
+import { useAuth } from "../context/authcontext";
+
+import LoginPage from "../pages/loginpage/loginpage";
+
+import AdminLayout from "../pages/admin/admindashboard";
+import AdminHome from "../pages/admin/adminhome";
+import AdminEmployees from "../pages/admin/adminemployees";
+import AdminTasks from "../pages/admin/admintasks";
+import AdminReports from "../pages/admin/adminreports";
+
+import EmployeeLayout from "../pages/employee/employeedashboard";
+import EmployeeTasks from "../pages/employee/employeetasks";
+import EmployeeReport from "../pages/employee/employeereport";
+
+interface ProtectedRouteProps {
+    allowedRole: "ADMIN" | "EMPLOYEE";
+}
+
+
+function ProtectedRoute({ allowedRole }: ProtectedRouteProps) {
+    const { user } = useAuth();
+
+    if (!user) {
+        return <Navigate to="/" replace />;
+    }
+
+    if (user.role !== allowedRole) {
+        return (
+            <Navigate
+                to={user.role === "ADMIN" ? "/admin" : "/employee"}
+                replace
+            />
+        );
+    }
+
+    return <Outlet />;
+}
+
 
 export default function AppRoutes() {
     const { user } = useAuth();
@@ -23,11 +49,7 @@ export default function AppRoutes() {
                 element={
                     user ? (
                         <Navigate
-                            to={
-                                user.role === "ADMIN"
-                                    ? "/admin"
-                                    : "/employee"
-                            }
+                            to={user.role === "ADMIN" ? "/admin" : "/employee"}
                             replace
                         />
                     ) : (
@@ -71,4 +93,3 @@ export default function AppRoutes() {
         </Routes>
     );
 }
-

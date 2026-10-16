@@ -1,15 +1,8 @@
-import {
-useState,
-useEffect,
-type ReactElement,
-type SubmitEvent,
-} from "react";
+import {useState,useEffect,type ReactElement,type SubmitEvent,} from "react";
 
-import {
-createEmployee,
-getAllEmployees,
-} from "../../api/employees";
-import type { CreateEmployeeRequest, Employee } from "../../type";
+import {createEmployee,getAllEmployees,} from "../../api/employees";
+import type { CreateEmployeeRequest, Employee } from "../../type/employee";
+
 
 
 
@@ -17,8 +10,6 @@ export default function AdminEmployees(): ReactElement {
 const [name, setName] = useState<string>("");
 const [designation, setDesignation] = useState<string>("");
 const [email, setEmail] = useState<string>("");
-
-
 const [employees, setEmployees] = useState<Employee[]>([]);
 const [loading, setLoading] = useState<boolean>(true);
 const [creating, setCreating] = useState<boolean>(false);
@@ -47,11 +38,8 @@ useEffect(() => {
     void loadEmployees();
 }, []);
 
-async function onSubmit(
-    event: SubmitEvent<HTMLFormElement>
-): Promise<void> {
+async function onSubmit(event: SubmitEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
-
     setError(null);
     setSuccess(null);
 
@@ -94,6 +82,8 @@ async function onSubmit(
         setCreating(false);
     }
 }
+
+
 
 return (
     <div>

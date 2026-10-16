@@ -1,11 +1,8 @@
-import {
-useState,
-useEffect,
-type ReactElement,
-} from "react";
+import {useState,useEffect,type ReactElement,} from "react";
 
 import { getAllEmployeeReports } from "../../api/reports";
-import type { EmployeeReport } from "../../type";
+import type { EmployeeReport } from "../../type/report";
+
 
 
 export default function AdminReports(): ReactElement {

@@ -1,12 +1,8 @@
-import {
-useState,
-type ReactElement,
-type SubmitEvent,
-} from "react";
+import {useState,type ReactElement,type SubmitEvent,} from "react";
 
 import { createTask } from "../../api/tasks";
-import type { CreateTaskRequest, Employee, TaskItem } from "../../type";
-
+import type { Employee } from "../../type/employee";
+import type { CreateTaskRequest, TaskItem } from "../../type/task";
 
 
 interface CreateTaskFormProps {

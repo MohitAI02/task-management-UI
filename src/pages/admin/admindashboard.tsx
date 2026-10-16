@@ -16,7 +16,6 @@ export default function AdminLayout() {
                     ]}
                 />
                
-
             <main className="admin-page-content">
                 <Outlet />
             </main>

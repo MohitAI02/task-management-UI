@@ -2,7 +2,8 @@
 import { useState, useEffect, type ReactElement } from "react";
 import { useAuth } from "../../context/authcontext";
 import { getEmployeeReport } from "../../api/reports";
-import type { EmployeeReport } from "../../type";
+import type { EmployeeReport } from "../../type/report";
+
 
 
 export default function EmployeeReport(): ReactElement {

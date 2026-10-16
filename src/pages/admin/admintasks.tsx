@@ -1,22 +1,12 @@
-import {
-useState,
-useEffect,
-type ReactElement,
-} from "react";
-
-
-
+import {useState,useEffect,type ReactElement,} from "react";
 import { getAllEmployees } from "../../api/employees";
+import {getAllTasks,markDone,dropTask,} from "../../api/tasks";
 
-import {
-getAllTasks,
-markDone,
-dropTask,
-} from "../../api/tasks";
-import type { Employee, TaskFilter, TaskItem } from "../../type";
 import { useAuth } from "../../context/authcontext";
 import CreateTaskForm from "./CreateTaskForm";
 import TaskFilters from "./TaskFilters";
+import type { Employee } from "../../type/employee";
+import type { TaskFilter, TaskItem } from "../../type/task";
 
 
 
@@ -95,7 +85,7 @@ async function handleMarkDone(
         return;
     }
 
-    setActionLoading(true);
+    setActionLoading(true); 
     setError(null);
     setSuccess(null);
 

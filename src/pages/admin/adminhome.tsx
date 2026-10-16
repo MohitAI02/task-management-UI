@@ -5,7 +5,7 @@ type ReactElement,
 } from "react";
 
 import { getOverdueTasks } from "../../api/tasks";
-import type { TaskItem } from "../../type";
+import type { TaskItem } from "../../type/task";
 
 
 export default function AdminHome(): ReactElement {

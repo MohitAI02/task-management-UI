@@ -1,7 +1,8 @@
 import { BrowserRouter } from "react-router-dom";
 
 import { AuthProvider } from "./context/authcontext";
-import AppRoutes from "./api/routes/approutes";
+import AppRoutes from "./routes/protectedroute";
+
 
 
 export default function App() {

@@ -1,5 +1,7 @@
 import {useState,type ReactElement,type SubmitEvent,} from "react";
-import type { TaskFilter } from "../../type";
+
+import "../pagecss/taskfilters.css";
+import type { TaskFilter } from "../../type/task";
 
 
 interface TaskFiltersProps {
@@ -37,12 +39,10 @@ function handleReset(): void {
 
     void onFilter({});
 }
-
 return (
-    <form onSubmit={onSubmit}>
-        <div>
+    <form className="task-filters" onSubmit={onSubmit}>
+        <div className="task-filter-group">
             <label htmlFor="status">Status</label>
-            {" "}
             <select
                 id="status"
                 value={status}
@@ -57,9 +57,12 @@ return (
             </select>
         </div>
 
-        <div>
+        <div className="task-filter-group">
             <label htmlFor="fromDate">From</label>
-            {" "}
+            <select name="age" id="age">
+                <option value="12">12</option>
+                <option value="23">21</option>
+            </select>
             <input
                 id="fromDate"
                 type="date"
@@ -68,9 +71,8 @@ return (
             />
         </div>
 
-        <div>
+        <div className="task-filter-group">
             <label htmlFor="toDate">To</label>
-            {" "}
             <input
                 id="toDate"
                 type="date"
@@ -79,22 +81,24 @@ return (
             />
         </div>
 
-        <br />
+        <div className="task-filter-actions">
+            <button
+                type="submit"
+                className="task-filter-apply"
+                disabled={loading}
+            >
+                {loading ? "Loading..." : "Apply Filter"}
+            </button>
 
-        <button type="submit" disabled={loading}>
-            {loading ? "Loading..." : "Apply Filter"}
-        </button>
-
-        {" "}
-
-        <button
-            type="button"
-            onClick={handleReset}
-            disabled={loading}
-        >
-            Clear Filters
-        </button>
+            <button
+                type="button"
+                className="task-filter-reset"
+                onClick={handleReset}
+                disabled={loading}
+            >
+                Clear Filters
+            </button>
+        </div>
     </form>
 );
-
 }

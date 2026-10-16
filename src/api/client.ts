@@ -1,5 +1,4 @@
-import type { LoginResponse } from "../type";
-
+import type { LoginResponse } from "../type/auth";
 
 
 const BASE_URL = "https://localhost:7258/api";
@@ -11,14 +10,13 @@ interface ApiErrorBody {
 let currentLoginId: string | null = null;
 
 
-
-export function setLoginHeader(
-  user: LoginResponse | null
-): void {
-  currentLoginId = user?.loginId ?? null;
+export function setLoginHeader(user: LoginResponse | null): void {
+  if (user !== null && user !== undefined && user.loginId !== null && user.loginId !== undefined) {
+    currentLoginId = user.loginId;
+  } else {
+    currentLoginId = null;
+  }
 }
-
-
 
 function buildHeaders(withJson: boolean): Record<string, string> {
   const headers: Record<string, string> = {};
@@ -34,17 +32,25 @@ function buildHeaders(withJson: boolean): Record<string, string> {
 }
 
 
-
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
-    const errorBody: ApiErrorBody | null =
-      await res.json().catch((): null => null);
+    const errorBody: ApiErrorBody | null =await res.json().catch((): null => null);
+    let errorMessage: string;
 
-    throw new Error(
-      errorBody?.message ??
-      `Request failed with status ${res.status}`
-    );
+    if (
+      errorBody !== null && 
+      errorBody !== undefined && 
+      errorBody.message !== null && 
+      errorBody.message !== undefined
+    ) {
+      errorMessage = errorBody.message;
+    } else {
+      errorMessage = `Request failed with status ${res.status}`;
+    }
+
+    throw new Error(errorMessage);
   }
+  
   return (await res.json()) as T;
 }
 
@@ -58,11 +64,7 @@ export async function apiGet<T>(path: string): Promise<T> {
 }
 
 
-
-export async function apiPost<T>(
-  path: string,
-  body: unknown
-): Promise<T> {
+export async function apiPost<T>(path: string, body: unknown): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     method: "POST",
     headers: buildHeaders(true),
@@ -70,7 +72,6 @@ export async function apiPost<T>(
   });
   return handleResponse<T>(res);
 }
-
 
 
 export async function apiPut<T>(path: string): Promise<T> {

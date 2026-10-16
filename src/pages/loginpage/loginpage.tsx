@@ -1,9 +1,7 @@
 import { useState, type SubmitEvent } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { login } from "../../api/auth";
 import { useAuth } from "../../context/authcontext";
-
 import "./loginpage.css";
 
 function LoginPage() {
@@ -15,20 +13,13 @@ function LoginPage() {
     const navigate = useNavigate();
     const { login: saveUser } = useAuth();
 
-    async function handleSubmit(
-        event: SubmitEvent<HTMLFormElement>
-    ): Promise<void> {
+    async function handleSubmit(event: SubmitEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault();
-
         setErrorMessage("");
         setIsLoading(true);
 
         try {
-            const response = await login({
-                loginId: loginId,
-                password: password,
-            });
-
+            const response = await login({loginId: loginId,password: password,});
             if (
                 response.role !== "ADMIN" &&
                 response.role !== "EMPLOYEE"
@@ -38,7 +29,6 @@ function LoginPage() {
             }
 
             saveUser(response);
-
             if (response.role === "ADMIN") {
                 navigate("/admin");
             } else {
@@ -53,7 +43,6 @@ function LoginPage() {
             setIsLoading(false);
         }
     }
-
     return (
         <div className="login-page">
             <div className="login-card">
@@ -84,10 +73,6 @@ function LoginPage() {
                             {errorMessage}
                         </p>
                     )}
-                    
-
-
-              
                     <br />
 
                     <button type="submit" disabled={isLoading}>
